@@ -4,19 +4,19 @@ import { Menu, X } from "lucide-react";
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
 
-  const scrollToTechnologies = (e) => {
-    e.preventDefault();
-    setIsOpen(false);
-    const element = document.getElementById("technologies");
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-    }
-  };
+  const navLinks = [
+    { name: "Home", href: "#home" },
+    { name: "Technologies", href: "#technologies" },
+    { name: "Projects", href: "#projects" },
+    { name: "About", href: "#about" },
+    { name: "Contact", href: "#contact" },
+  ];
 
-  const scrollToHome = (e) => {
+  const handleScroll = (e, href) => {
     e.preventDefault();
     setIsOpen(false);
-    const element = document.getElementById("home");
+    const targetId = href.replace("#", "");
+    const element = document.getElementById(targetId);
     if (element) {
       element.scrollIntoView({ behavior: "smooth" });
     }
@@ -33,7 +33,7 @@ export default function Navbar() {
       <div className="hidden md:flex max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 items-center justify-between">
         <a
           href="#home"
-          onClick={scrollToHome}
+          onClick={(e) => handleScroll(e, "#home")}
           className="flex items-center cursor-pointer"
         >
           <img
@@ -44,32 +44,16 @@ export default function Navbar() {
         </a>
 
         <div className="flex items-center gap-8 text-sm font-medium text-slate-600">
-          <a
-            href="#home"
-            onClick={scrollToHome}
-            className="hover:text-slate-900 transition-colors cursor-pointer"
-          >
-            Home
-          </a>
-          <a
-            href="#technologies"
-            onClick={scrollToTechnologies}
-            className="hover:text-slate-900 transition-colors cursor-pointer"
-          >
-            Technologies
-          </a>
-          <a
-            href="#projects"
-            className="hover:text-slate-900 transition-colors"
-          >
-            Projects
-          </a>
-          <a href="#about" className="hover:text-slate-900 transition-colors">
-            About
-          </a>
-          <a href="#contact" className="hover:text-slate-900 transition-colors">
-            Contact
-          </a>
+          {navLinks.map((link) => (
+            <a
+              key={link.name}
+              href={link.href}
+              onClick={(e) => handleScroll(e, link.href)}
+              className="hover:text-slate-900 transition-colors cursor-pointer"
+            >
+              {link.name}
+            </a>
+          ))}
         </div>
 
         <div className="flex items-center gap-3">
@@ -90,21 +74,23 @@ export default function Navbar() {
             className="p-1 rounded-xl text-slate-700 hover:bg-slate-100 transition-colors focus:outline-none"
             aria-label="Toggle navigation menu"
           >
-            {isOpen ? (
-              <X
-                size={22}
-                className="rotate-90 transition-transform duration-300"
-              />
-            ) : (
-              <Menu size={22} />
-            )}
+            <div className="transition-transform duration-300 ease-in-out transform">
+              {isOpen ? (
+                <X
+                  size={22}
+                  className="rotate-90 transition-transform duration-300"
+                />
+              ) : (
+                <Menu size={22} />
+              )}
+            </div>
           </button>
         </div>
 
         <div className="flex items-center justify-center">
           <a
             href="#home"
-            onClick={scrollToHome}
+            onClick={(e) => handleScroll(e, "#home")}
             className="flex items-center cursor-pointer"
           >
             <img
@@ -116,10 +102,10 @@ export default function Navbar() {
         </div>
 
         <div className="flex items-center justify-end gap-1">
-          <button className="text-[11px] font-semibold text-slate-700 px-1.5 py-1">
+          <button className="text-[11px] font-semibold text-slate-700 hover:text-slate-900 px-1.5 py-1 whitespace-nowrap transition-colors">
             Sign In
           </button>
-          <button className="text-[11px] font-semibold text-white bg-brand-gradient px-2.5 py-1 rounded-full">
+          <button className="text-[11px] font-semibold text-white bg-brand-gradient px-2.5 py-1 rounded-full shadow-sm whitespace-nowrap">
             Sign Up
           </button>
         </div>
@@ -127,24 +113,24 @@ export default function Navbar() {
 
       {/* Mobile Animated Dropdown Menu */}
       <div
-        className={`md:hidden grid transition-all duration-300 ease-in-out ${isOpen ? "grid-rows-[1fr] opacity-100 border-b border-slate-100 shadow-lg" : "grid-rows-[0fr] opacity-0 pointer-events-none"}`}
+        className={`md:hidden grid transition-all duration-300 ease-in-out ${
+          isOpen
+            ? "grid-rows-[1fr] opacity-100 border-b border-slate-100 shadow-lg"
+            : "grid-rows-[0fr] opacity-0 pointer-events-none"
+        }`}
       >
         <div className="overflow-hidden">
           <div className="px-4 pt-3 pb-5 space-y-1 bg-white">
-            <a
-              href="#home"
-              onClick={scrollToHome}
-              className="block px-3 py-2.5 rounded-lg text-sm font-semibold text-slate-700 hover:bg-slate-50"
-            >
-              Home
-            </a>
-            <a
-              href="#technologies"
-              onClick={scrollToTechnologies}
-              className="block px-3 py-2.5 rounded-lg text-sm font-semibold text-slate-700 hover:bg-slate-50 cursor-pointer"
-            >
-              Technologies
-            </a>
+            {navLinks.map((link) => (
+              <a
+                key={link.name}
+                href={link.href}
+                onClick={(e) => handleScroll(e, link.href)}
+                className="block px-3 py-2.5 rounded-lg text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-slate-900 transition-colors cursor-pointer"
+              >
+                {link.name}
+              </a>
+            ))}
           </div>
         </div>
       </div>
