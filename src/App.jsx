@@ -12,9 +12,9 @@ export default function App() {
   const [technologies, setTechnologies] = useState([]);
   const [stack, setStack] = useState([]);
 
-  // Fetch technology cards data from public folder
+  // Fetch technology cards data using Vite BASE_URL for subfolder compatibility
   useEffect(() => {
-    fetch("/technologies.json")
+    fetch(`${import.meta.env.BASE_URL}technologies.json`)
       .then((res) => res.json())
       .then((data) => setTechnologies(data))
       .catch((err) => console.error("Error loading technologies:", err));
