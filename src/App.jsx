@@ -1,4 +1,6 @@
 import { useState, useEffect } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import Navbar from "./Navbar";
 import Hero from "./Hero";
 import TechCard from "./TechCard";
@@ -23,19 +25,34 @@ export default function App() {
   }, []);
 
   const handleAdd = (tech) => {
+    if (stack.some((item) => item.id === tech.id)) {
+      toast.warning(`${tech.name} is already in your stack!`);
+      return;
+    }
     setStack((prev) => [...prev, tech]);
+    toast.success(`Added ${tech.name} to stack!`);
   };
 
   const handleRemove = (id) => {
+    const itemToRemove = stack.find((item) => item.id === id);
     setStack((prev) => prev.filter((item) => item.id !== id));
+    if (itemToRemove) {
+      toast.info(`Removed ${itemToRemove.name} from stack.`);
+    }
   };
 
   const handleClearAll = () => {
     setStack([]);
+    toast.error("Cleared all technologies from stack.");
   };
 
   return (
     <div className="min-h-screen bg-slate-50/50 text-slate-800">
+      <ToastContainer
+        position="bottom-right"
+        autoClose={2500}
+        hideProgressBar={false}
+      />
       <Navbar />
       <Hero />
 
