@@ -14,8 +14,15 @@ export default function App() {
 
   // Fetch technology cards data using Vite BASE_URL for subfolder compatibility
   useEffect(() => {
-    fetch(`${import.meta.env.BASE_URL}technologies.json`)
-      .then((res) => res.json())
+    const jsonUrl = `${import.meta.env.BASE_URL}technologies.json`;
+
+    fetch(jsonUrl)
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error(`HTTP error! Status: ${res.status}`);
+        }
+        return res.json();
+      })
       .then((data) => setTechnologies(data))
       .catch((err) => console.error("Error loading technologies:", err));
   }, []);
