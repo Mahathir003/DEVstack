@@ -3,12 +3,16 @@ export default function Footer() {
     <footer className="bg-white border-t border-slate-100 pt-12 md:pt-16 pb-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-2 md:grid-cols-5 gap-8 pb-12">
-          {/* Brand & Socials (Full width on mobile) */}
+          {/* Brand & Socials */}
           <div className="col-span-2 space-y-4">
             <a href="#home" className="inline-block">
               <img
-                src={`${import.meta.env.BASE_URL}logo-text.png`}
+                src={`${import.meta.env.BASE_URL}/logo-text.png`.replace(
+                  /\/\//g,
+                  "/",
+                )}
                 alt="Dev Stack Logo"
+                className="h-8 w-auto object-contain"
               />
             </a>
             <p className="text-xs text-slate-500 leading-relaxed max-w-sm">

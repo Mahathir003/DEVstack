@@ -28,7 +28,10 @@ export default function Hero() {
 
       <div className="relative flex justify-center items-center">
         <img
-          src={`${import.meta.env.BASE_URL}banner-stack.png`}
+          src={`${import.meta.env.BASE_URL}/banner-stack.png`.replace(
+            /\/\//g,
+            "/",
+          )}
           alt="Dev Stack Illustration"
         />
       </div>
