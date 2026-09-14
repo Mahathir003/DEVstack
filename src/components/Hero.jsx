@@ -28,9 +28,8 @@ export default function Hero() {
 
       <div className="relative flex justify-center items-center">
         <img
-          src="/banner-stack.png"
+          src={`${import.meta.env.BASE_URL}banner-stack.png`}
           alt="Dev Stack Illustration"
-          className="w-full max-w-md md:max-w-lg object-contain drop-shadow-2xl hover:scale-105 transition-transform duration-300"
         />
       </div>
     </section>

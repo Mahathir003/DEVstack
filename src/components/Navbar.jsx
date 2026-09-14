@@ -18,9 +18,8 @@ export default function Navbar() {
       <div className="hidden md:flex max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 items-center justify-between">
         <a href="#home" className="flex items-center">
           <img
-            src="/logo-text.png"
+            src={`${import.meta.env.BASE_URL}logo-text.png`}
             alt="Dev Stack Logo"
-            className="h-8 w-auto object-contain"
           />
         </a>
 
@@ -72,9 +71,8 @@ export default function Navbar() {
         <div className="flex items-center justify-center">
           <a href="#home" className="flex items-center">
             <img
-              src="/logo-text.png"
+              src={`${import.meta.env.BASE_URL}logo-text.png`}
               alt="Dev Stack Logo"
-              className="h-5 sm:h-6 w-auto object-contain"
             />
           </a>
         </div>
