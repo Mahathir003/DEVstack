@@ -1,82 +1,87 @@
-import { Trash2, Layers, Cpu } from "lucide-react";
+import React from "react";
 
-export default function StackSidebar({ stack, onRemove, onClearAll }) {
+const getTechIcon = (tech) => {
+  const iconMap = {
+    react: "https://cdn.simpleicons.org/react/61DAFB",
+    vue: "https://cdn.simpleicons.org/vuedotjs/4FC08D",
+    svelte: "https://cdn.simpleicons.org/svelte/FF3E00",
+    nextjs: "https://cdn.simpleicons.org/nextdotjs/000000",
+    nodejs: "https://cdn.simpleicons.org/nodedotjs/5FA04E",
+    postgresql: "https://cdn.simpleicons.org/postgresql/4169E1",
+    redis: "https://cdn.simpleicons.org/redis/FF4438",
+    javascript: "https://cdn.simpleicons.org/javascript/F7DF1E",
+    typescript: "https://cdn.simpleicons.org/typescript/3178C6",
+    java: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg",
+    tailwindcss: "https://cdn.simpleicons.org/tailwindcss/06B6D4",
+    docker: "https://cdn.simpleicons.org/docker/2496ED",
+  };
+  return iconMap[tech?.id?.toLowerCase()] || tech?.icon;
+};
+
+export default function StackSidebar({
+  stack = [],
+  onRemoveFromStack,
+  onClearAll,
+}) {
   return (
-    <aside className="bg-white border border-slate-200/80 rounded-2xl p-6 shadow-sm sticky top-24">
-      <div className="flex items-center justify-between pb-4 border-b border-slate-100 mb-4">
-        <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-lg bg-violet-50 text-violet-600 flex items-center justify-center">
-            <Layers size={18} />
-          </div>
-          <div>
-            <h2 className="text-base font-bold text-slate-900">
-              Your Custom Stack
-            </h2>
-            <p className="text-xs text-slate-500">
-              {stack.length} technologies selected
-            </p>
-          </div>
-        </div>
-
-        {stack.length > 0 && (
-          <button
-            onClick={onClearAll}
-            className="text-xs font-semibold text-rose-600 hover:text-rose-700 hover:bg-rose-50 px-2.5 py-1.5 rounded-lg transition-colors flex items-center gap-1"
-          >
-            <Trash2 size={14} />
-            Clear All
-          </button>
-        )}
+    <div className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm sticky top-6">
+      <div className="mb-5">
+        <h2 className="font-bold text-slate-900 text-lg">Your Stack</h2>
+        <p className="text-xs text-slate-400 font-medium mt-0.5">
+          {stack.length} {stack.length === 1 ? "Technology" : "Technologies"}{" "}
+          Selected
+        </p>
       </div>
 
       {stack.length === 0 ? (
-        <div className="py-12 text-center flex flex-col items-center justify-center">
-          <div className="w-12 h-12 rounded-2xl bg-slate-50 flex items-center justify-center text-slate-300 mb-3 border border-dashed border-slate-200">
-            <Cpu size={24} />
-          </div>
-          <p className="text-xs font-semibold text-slate-700 mb-1">
-            Your stack is empty
-          </p>
-          <p className="text-[11px] text-slate-400 max-w-[200px]">
-            Click "Add to Stack" on any technology card to build your workflow.
-          </p>
-        </div>
+        <p className="text-sm text-slate-400 text-center py-8">
+          No technologies added yet.
+        </p>
       ) : (
-        <div className="space-y-3 max-h-[480px] overflow-y-auto pr-1">
+        <div className="space-y-3 max-h-[50vh] overflow-y-auto pr-1">
           {stack.map((item) => (
             <div
               key={item.id}
-              className="flex items-center justify-between p-3 rounded-xl bg-slate-50 border border-slate-100 hover:border-slate-200 transition-colors"
+              className="flex items-center justify-between p-3.5 bg-white border border-slate-200/70 rounded-xl shadow-xs"
             >
-              <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-lg bg-white p-1.5 border border-slate-200 flex items-center justify-center shrink-0">
-                  <img
-                    src={item.icon}
-                    alt={item.name}
-                    className="w-full h-full object-contain"
-                  />
-                </div>
-                <div>
-                  <h4 className="text-xs font-bold text-slate-800">
+              <div className="flex items-center space-x-3 min-w-0">
+                <img
+                  src={getTechIcon(item)}
+                  alt={item.name}
+                  className="w-7 h-7 object-contain flex-shrink-0"
+                />
+                <div className="min-w-0">
+                  <h4 className="font-bold text-sm text-slate-900 leading-tight truncate">
                     {item.name}
                   </h4>
-                  <span className="text-[10px] text-slate-500 font-medium">
+                  <p className="text-xs text-slate-400 font-medium leading-tight mt-0.5 truncate">
                     {item.category}
-                  </span>
+                  </p>
                 </div>
               </div>
 
               <button
-                onClick={() => onRemove(item.id)}
-                className="text-slate-400 hover:text-rose-600 hover:bg-white p-1.5 rounded-lg transition-colors"
-                title="Remove technology"
+                type="button"
+                onClick={() => onRemoveFromStack(item.id)}
+                className="text-slate-300 hover:text-slate-500 text-base font-light p-1 ml-2 transition-colors"
+                title={`Remove ${item.name}`}
               >
-                <Trash2 size={14} />
+                ✕
               </button>
             </div>
           ))}
         </div>
       )}
-    </aside>
+
+      {stack.length > 0 && (
+        <button
+          type="button"
+          onClick={onClearAll}
+          className="w-full py-2.5 mt-5 border border-rose-200 text-rose-500 hover:bg-rose-50 rounded-xl font-semibold text-sm transition-colors"
+        >
+          Remove All
+        </button>
+      )}
+    </div>
   );
 }

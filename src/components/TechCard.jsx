@@ -1,68 +1,82 @@
-import { Star } from "lucide-react";
+import React from "react";
 
-export default function TechCard({ tech, onAdd, isAdded }) {
-  const getBadgeColor = (badge) => {
-    switch (badge) {
-      case "Popular":
-        return "bg-sky-50 text-sky-600 border-sky-100";
-      case "Versatile":
-        return "bg-emerald-50 text-emerald-600 border-emerald-100";
-      case "Fast":
-        return "bg-amber-50 text-amber-600 border-amber-100";
-      case "Top SQL":
-        return "bg-indigo-50 text-indigo-600 border-indigo-100";
-      case "Cache":
-        return "bg-rose-50 text-rose-600 border-rose-100";
-      default:
-        return "bg-slate-50 text-slate-600 border-slate-100";
-    }
+const getTechIcon = (tech) => {
+  const iconMap = {
+    react: "https://cdn.simpleicons.org/react/61DAFB",
+    vue: "https://cdn.simpleicons.org/vuedotjs/4FC08D",
+    svelte: "https://cdn.simpleicons.org/svelte/FF3E00",
+    nextjs: "https://cdn.simpleicons.org/nextdotjs/000000",
+    nodejs: "https://cdn.simpleicons.org/nodedotjs/5FA04E",
+    postgresql: "https://cdn.simpleicons.org/postgresql/4169E1",
+    redis: "https://cdn.simpleicons.org/redis/FF4438",
+    javascript: "https://cdn.simpleicons.org/javascript/F7DF1E",
+    typescript: "https://cdn.simpleicons.org/typescript/3178C6",
+    java: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg",
+    tailwindcss: "https://cdn.simpleicons.org/tailwindcss/06B6D4",
+    docker: "https://cdn.simpleicons.org/docker/2496ED",
   };
+  return iconMap[tech?.id?.toLowerCase()] || tech?.icon;
+};
+
+export default function TechCard({ tech, onAddToStack }) {
+  if (!tech) return null;
 
   return (
-    <div className="bg-white border border-slate-200/80 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between">
+    <div className="flex flex-col justify-between p-6 bg-white rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition-all duration-200 h-full">
       <div>
-        <div className="flex items-start justify-between mb-4">
-          <div className="w-12 h-12 rounded-xl bg-slate-50 p-2.5 flex items-center justify-center border border-slate-100">
+        {/* Header: Logo, Title, Category & Badge */}
+        <div className="flex items-start justify-between gap-2 mb-3">
+          <div className="flex items-center space-x-3">
             <img
-              src={tech.icon}
+              src={getTechIcon(tech)}
               alt={tech.name}
-              className="w-full h-full object-contain"
+              className="w-8 h-8 object-contain flex-shrink-0"
             />
+            <div>
+              <h3 className="font-bold text-lg text-slate-900 leading-tight">
+                {tech.name}
+              </h3>
+              <p className="text-xs text-slate-400 font-medium mt-0.5">
+                {tech.category}
+              </p>
+            </div>
           </div>
-          <span
-            className={`text-xs font-semibold px-2.5 py-1 rounded-full border ${getBadgeColor(tech.badge)}`}
-          >
-            {tech.badge}
-          </span>
+
+          {tech.badge && (
+            <span className="px-3 py-1 text-xs font-medium text-indigo-600 bg-indigo-50/80 rounded-full whitespace-nowrap">
+              {tech.badge}
+            </span>
+          )}
         </div>
 
-        <h3 className="text-lg font-bold text-slate-900 mb-2">{tech.name}</h3>
-        <p className="text-xs text-slate-500 leading-relaxed mb-6 min-h-[48px]">
+        {/* Rating & Difficulty */}
+        <div className="flex items-center space-x-2 mb-4 text-xs">
+          {tech.rating && (
+            <span className="flex items-center space-x-1 font-bold text-amber-500 bg-amber-50/80 px-2.5 py-1 rounded-md">
+              <span>★</span>
+              <span>{tech.rating}</span>
+            </span>
+          )}
+          {tech.difficulty && (
+            <span className="font-medium text-slate-600 bg-slate-100/80 px-2.5 py-1 rounded-md">
+              {tech.difficulty}
+            </span>
+          )}
+        </div>
+
+        {/* Description */}
+        <p className="text-sm text-slate-500 leading-relaxed mb-6">
           {tech.description}
         </p>
-
-        <div className="flex items-center justify-between text-xs text-slate-500 border-t border-slate-100 pt-4 mb-6">
-          <span className="bg-slate-100 text-slate-700 font-medium px-2 py-0.5 rounded">
-            {tech.category}
-          </span>
-          <span>{tech.difficulty}</span>
-          <div className="flex items-center gap-1 text-amber-500 font-semibold">
-            <Star size={14} className="fill-amber-400" />
-            <span>{tech.rating}</span>
-          </div>
-        </div>
       </div>
 
+      {/* Action Button */}
       <button
-        onClick={() => onAdd(tech)}
-        disabled={isAdded}
-        className={`w-full py-2.5 rounded-xl text-xs font-bold transition-all ${
-          isAdded
-            ? "bg-slate-100 text-slate-400 cursor-not-allowed"
-            : "bg-slate-900 hover:bg-slate-800 text-white shadow-sm"
-        }`}
+        type="button"
+        onClick={() => onAddToStack(tech)}
+        className="w-full py-3 bg-[#0F172A] hover:bg-black text-white font-semibold text-sm rounded-xl transition-colors shadow-sm focus:outline-none"
       >
-        {isAdded ? "✓ Added to Stack" : "Add to Stack"}
+        Add to Stack
       </button>
     </div>
   );
