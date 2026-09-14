@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Navbar from "./Navbar";
+import Navbar from "../Navbar";
 import Hero from "./Hero";
-import TechCard from "./TechCard";
-import StackSidebar from "./StackSidebar";
+import TechCard from "../TechCard";
+import StackSidebar from "../StackSidebar";
 import Footer from "./Footer";
 
 export default function App() {
