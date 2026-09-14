@@ -7,9 +7,8 @@ export default function Footer() {
           <div className="col-span-2 space-y-4">
             <a href="#home" className="inline-block">
               <img
-                src="/logo-text.png"
+                src={`${import.meta.env.BASE_URL}logo-text.png`}
                 alt="Dev Stack Logo"
-                className="h-7 w-auto object-contain"
               />
             </a>
             <p className="text-xs text-slate-500 leading-relaxed max-w-sm">
