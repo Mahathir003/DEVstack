@@ -16,14 +16,13 @@ export default function Navbar() {
             {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
 
-          <div className="flex items-center gap-2">
-            <div className="w-9 h-9 rounded-xl bg-brand-gradient flex items-center justify-center text-white font-bold text-sm shadow-md">
-              DS
-            </div>
-            <span className="text-xl font-bold text-slate-900 tracking-tight">
-              Dev Stack
-            </span>
-          </div>
+          <a href="#home" className="flex items-center">
+            <img
+              src="/logo-text.png"
+              alt="Dev Stack Logo"
+              className="h-8 w-auto object-contain"
+            />
+          </a>
         </div>
 
         {/* Desktop Links */}

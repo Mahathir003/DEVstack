@@ -5,14 +5,13 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-5 gap-8 pb-12">
           {/* Brand & Socials */}
           <div className="md:col-span-2 space-y-4">
-            <div className="flex items-center gap-2">
-              <div className="w-7 h-7 rounded-lg bg-brand-gradient flex items-center justify-center text-white font-bold text-xs shadow-sm">
-                DS
-              </div>
-              <span className="text-lg font-bold text-slate-900 tracking-tight">
-                Dev <span className="text-brand-gradient">Stack</span>
-              </span>
-            </div>
+            <a href="#home" className="inline-block">
+              <img
+                src="/logo-text.png"
+                alt="Dev Stack Logo"
+                className="h-7 w-auto object-contain"
+              />
+            </a>
             <p className="text-xs text-slate-500 leading-relaxed max-w-sm">
               Curated tools, technologies, and resources for developers building
               modern software.
